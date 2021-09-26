@@ -23,6 +23,8 @@ const reverseK = (head, cnt) => {
   return reverse(head, cnt);
 };
 
+// 因为 p.next 为 reverseK 的返回，而如果剩余节点小于 k 将原封不动返回 q
+// 所以 p.next !== q 可以用于判断循环结束
 const reverseKGroup = (head, k) => {
   const hair = new ListNode(null, head);
   let p = hair,
