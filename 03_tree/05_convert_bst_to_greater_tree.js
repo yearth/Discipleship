@@ -20,18 +20,18 @@
 function convertBST(root) {
   let sum = 0;
 
-  function rdfs(root) {
+  function dfs(root) {
     if (root === null) return null;
 
-    rdfs(root.right);
+    dfs(root.right);
 
     sum += root.val;
     root.val = sum;
 
-    rdfs(root.left);
+    dfs(root.left);
 
     return root;
   }
 
-  return rdfs(root);
+  return dfs(root);
 }
