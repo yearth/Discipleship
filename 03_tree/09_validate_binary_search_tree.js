@@ -1,7 +1,7 @@
 /*
  * @Author: Yearth
  * @Date: 2021-11-23 21:36:44
- * @Description: LeetCode
+ * @Description: LeetCode 98 验证二叉搜索树
  * @Link: https://leetcode-cn.com/problems/validate-binary-search-tree/
  */
 
