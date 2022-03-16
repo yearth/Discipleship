@@ -6,7 +6,7 @@
  */
 
 // 常规思路：cache，空间复杂度 O(n)
-const hasCycle = head => {
+const hasCycleByCache = head => {
   const cache = new Map();
   let p = head,
     cnt = 0;
@@ -20,7 +20,7 @@ const hasCycle = head => {
 };
 
 // O(1)思路：快慢指针
-const hasCycle = head => {
+const hasCycleByPointer = head => {
   let slow = head,
     fast = head;
   while (fast && fast.next) {
