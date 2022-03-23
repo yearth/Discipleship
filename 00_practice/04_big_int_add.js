@@ -45,4 +45,3 @@ const addByArray = (x, y) => {
 
   return result.reverse().join("");
 };
-console.log(addByArray(6573857492819342, 7563728175647285));
