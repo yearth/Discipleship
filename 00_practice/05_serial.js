@@ -11,7 +11,7 @@ const getTask =
       }, delay);
     });
   };
-const taskQueue = [getTask(1), getTask(2, 2000, false), getTask(3, 500)];
+const taskQueue = [getTask(1), getTask(2, 2000, false), getTask(3, 2000)];
 
 /**
  * @description 思路一: async
@@ -35,5 +35,17 @@ async function serialByAsync(queue, fn = (p, v) => [...p, v], initValue = []) {
   }
   return await asyncReduce(queue, fn, initValue);
 }
-console.log("------测试Demo1------");
-serialByAsync(taskQueue).then(console.log);
+// console.log("------测试 1------");
+// serialByAsync(taskQueue).then(console.log);
+
+/**
+ * @description 思路二：reduce
+ *
+ * 核心思路是利用数组的 reduce 方法
+ */
+const serialByReduce = async queue => {
+  return queue.reduce((sequence, next) => sequence.then(() => next()), Promise.resolve());
+};
+
+console.log("------测试 2------");
+console.log(serialByReduce(taskQueue));
