@@ -11,7 +11,7 @@ const getTask =
       }, delay);
     });
   };
-const taskQueue = [getTask(1), getTask(2, 2000, false), getTask(3, 2000)];
+const taskQueue = [getTask(1), getTask(2, 2000, true), getTask(3, 2000)];
 
 /**
  * @description 思路一: async
@@ -48,4 +48,41 @@ const serialByReduce = async queue => {
 };
 
 console.log("------测试 2------");
-console.log(serialByReduce(taskQueue));
+// console.log(serialByReduce(taskQueue));
+
+/**
+ * @description 思路三：Symbol.iterator
+ *
+ * 改变 Symbol.iterator 从而改变程序默认执行流程
+ */
+class TaskIterator {
+  constructor(queue) {
+    this.queue = queue;
+    this.length = queue.length;
+    this.index = 0;
+    this.valueList = [];
+    this.errList = [];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    while (this.index < this.length) {
+      const task = this.queue[this.index];
+      const [value, err] = await task(Math.random())
+        .then(d => [d, null])
+        .catch(e => [null, e]);
+      this.valueList.push(value);
+      this.errList.push(err);
+      this.index++;
+      yield [value, this.valueList, this.errList];
+    }
+  }
+}
+
+const serialByIterator = async queue => {
+  const tasks = new TaskIterator(queue);
+  for await (const [value, total, err] of tasks) {
+    console.log(value, total, err);
+  }
+};
+console.log("------测试 3------");
+console.log(serialByIterator(taskQueue));
