@@ -45,3 +45,23 @@ const addByArray = (x, y) => {
 
   return result.reverse().join("");
 };
+
+/**
+ * @description 思路二：借助 Boolean
+ *
+ * 由于进位必定为 0 或者 1，所以可以借助 Boolean 进行隐式转换
+ */
+function addByBoolean(a, b) {
+  let arrA = a.split(""),
+    arrB = b.split(""),
+    carry = 0,
+    sum = "";
+  while (arrA.length || arrB.length || carry) {
+    carry = carry + (~~arrA.pop() + ~~arrB.pop());
+    sum = (carry % 10) + sum;
+    carry = carry > 9;
+  }
+  return sum.replace(/^0+/, "");
+}
+const result = addByBoolean("6573857492819342", "7563728175647285");
+console.log("result", result);
