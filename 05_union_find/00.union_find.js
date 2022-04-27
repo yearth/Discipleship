@@ -1,8 +1,10 @@
 export class UnionFind {
   constructor(n) {
     this.parents = [];
+    this.size = [];
     for (let i = 0; i < n; i++) {
       this.parents[i] = i;
+      this.size[i] = 1;
     }
   }
   find(x) {
@@ -16,6 +18,7 @@ export class UnionFind {
     const y_ = this.find(y);
     if (x_ === y_) return 0;
     this.parents[x_] = y_;
+    this.size[y_] += this.size[x_];
     return 1;
   }
 }
